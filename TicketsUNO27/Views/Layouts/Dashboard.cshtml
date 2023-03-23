@@ -1,0 +1,279 @@
+﻿@{ Int32 unixTimestamp = 21;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Standard Meta -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <!-- Site Properties -->
+    <title>Service desk - Uno27</title>
+    <link rel=”stylesheet” href=”https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css” />
+    @*<link href="~/Content/semantic/semantic.min.css" rel="stylesheet" />*@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet" />
+    <link href="~/Content/ITPMDashboard.css" rel="stylesheet" />
+
+</head>
+<body>
+    @*Site wrapper
+        ===============================================
+        Content Wrapper. Contains page content*@
+    <div class="ui inverted menu" id="toolBar">
+        <a class="launch icon item" id="menu">
+            <i class="content icon"></i>
+        </a>
+        @*<div class="item" >
+                <div><i class="bell yellow icon"></i>bell</div>
+            </div>*@
+        <div class="ui orange animated button">
+            <a href="@Url.Action("Home","Home")">
+                <div class="hidden content" style="color:white">Home</div>
+                <div class="visible content">
+                    <i style="color:white" class="home icon"></i>
+                </div>
+            </a>
+        </div>
+
+        <div id="button">
+            @if (HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                @Html.ActionLink("Log Out",
+                "Logout",  // <-- Controller Name.
+                "Home",   // <-- ActionMethod
+                null, // <-- Route arguments.
+                new { @class = "ui orange button" }  // <-- htmlArguments .. which are none. You need this value
+                                                           //     otherwise you call the WRONG method ...
+                                                           //     (refer to comments, below).
+                )
+            }
+            else
+            {
+                {
+                    @Html.ActionLink("Log In",
+                    "Login",  // <-- Controller Name.
+                    "Login",   // <-- ActionMethod
+                    null, // <-- Route arguments.
+                    new { @class = "ui orange button" }  // <-- htmlArguments .. which are none. You need this value
+                                                               //     otherwise you call the WRONG method ...
+                                                               //     (refer to comments, below).
+                    )
+                }
+            }
+
+        </div>
+
+    </div>
+
+
+
+    <div class="ui simple sidebar black inverted vertical menu left uncover " id="profile">
+        <div class="item">
+            @*<a class="ui logo icon image">
+                <img src="~/Content/images/Logo-Circulo.png">
+            </a>*@
+            @if (HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                <a class="ui logo icon image">
+                    <img src="@Url.Action("Photo","Users")" alt="Entra" />
+                </a>
+                <h3 align="center"><b>@HttpContext.Current.User.Identity.Name</b></h3>
+            }
+            else
+            {
+                <a class="ui logo icon image">
+                    <img src="~/Content/images/Logo-Circulo.png">
+                </a>
+                <h3 align="center"><b>Usuario Invalido</b></h3>
+            }
+
+
+        </div>
+        <br />
+        <br />
+        @*<div align="center" class="ui search focus">
+            <div class="ui icon input">
+                <input class="prompt" type="text" placeholder="Search Projects..." autocomplete="off">
+                <i class="search icon"></i>
+            </div>
+            <div class="results"></div>
+        </div>*@
+        @*<br />
+            <br />
+            <div class="content" id="add" align="center">
+                <div class="ui vertical accordion menu" style="background-color: #2185d0; width:100px">
+                    <div class="title" style="color:white">
+                        <i class="dropdown icon"></i>
+                        <b>Ver</b>
+                    </div>
+                    <div class="grouped fields">
+                        <div style="width: auto">
+                            <a href="@Url.Action("Index","Rols")" style="color: white">Roles</a>
+                        </div>
+                        <div style="width: auto">
+                            <a href="@Url.Action("Index","Users")" style="color:white">Usuarios</a>
+                        </div>
+                        <div style="width: auto">
+                            <a href="@Url.Action("Index","Groups")" style="color:white">Grupos</a>
+                        </div>
+                        <div style="width: auto">
+                            <a href="@Url.Action("Index","Projects")" style="color:white">Proyectos</a>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        <br />
+        <br />
+        <div align="center">
+            <a href="@Url.Action("Index", "Groups")" class="ui large primary button" style="color:black">Groups</a>
+            @*<button class="ui large primary button" onclick="location.href='../Groups/Index'">
+                Grupos
+            </button>*@
+        </div>
+        <br />
+        <div align="center">
+            <a href="@Url.Action("Index", "Rols")" class="ui large primary button" style="color:black">Roles</a>
+            @*<button class="ui large primary button" onclick="location.href='../Rols/Index'">
+                Roles
+            </button>*@
+        </div>
+        <br />
+        <div align="center">
+            <a href="@Url.Action("Index", "Users")" class="ui large primary button" style="color:black">Usuarios</a>
+            @*<button class="ui large primary button" onclick="location.href='../Users/Index'">
+                Usuarios
+            </button>*@
+        </div>
+        <br />
+        <div align="center">
+
+            <a href="@Url.Action("Index", "Projects")" class="ui large primary button" style="color:black">Proyectos</a>
+            @*<button class="ui large primary button" onclick="location.href='../Projects/Index'">
+            Proyectos
+        </button>*@
+        </div>
+    </div>
+    <div class="content-wrapper bodyback" style="padding:100px">
+        <section class="content">
+            @RenderBody()
+        </section>
+    </div>
+    <footer class="main-footer">
+    </footer>
+
+    <!-- ./wrapper -->
+    <!-- jQuery 3 -->
+
+    @Scripts.Render("~/bundles/js")
+
+    <script>
+        const BaseUrl =  @Html.Raw(HttpUtility.JavaScriptStringEncode(Url.Content("~/"), true));
+        let isAgente = false;
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js">
+    </script>
+    <script type=”text/javascript” src=”https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js”></script>
+    <script src="~/Content/semantic/components/visibility.min.js"></script>
+    <script src="~/Content/semantic/components/sidebar.js"></script>
+    <script src="~/Content/semantic/components/transition.js"></script>
+    <script>
+        $('#menu').click(function () {
+            $('.ui.sidebar').sidebar('toggle');
+        })
+    </script>
+    <script>
+        $('.ui.accordion').accordion('toggle');
+    </script>
+    <script>
+        $(document)
+            .ready(function () {
+
+                // fix menu when passed
+                $('.masthead')
+                    .visibility({
+                        once: false,
+                        onBottomPassed: function () {
+                            $('.fixed.menu').transition('fade in');
+                        },
+                        onBottomPassedReverse: function () {
+                            $('.fixed.menu').transition('fade out');
+                        }
+                    })
+                    ;
+
+                // create sidebar and attach to menu open
+                $('.ui.sidebar')
+                    .sidebar('attach events', '.toc.item')
+                    ;
+
+            })
+            ;
+    </script>
+
+    <script>
+        $('#tabla').DataTable({
+            pagingType: 'full_numbers',
+        });
+    </script>
+
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+            $("#btn-send-ajax").click(function () {
+
+                var selectFile = ($("#fileUpload")).get(0).files;
+                var dataString = new FormData();
+
+                for (var i = 0; i < selectFile.length; i++) {
+                    dataString.append("fileUpload", selectFile[i]);
+                }
+                dataString.append("FileName", $("#FileName").val());
+                dataString.append("FileDescription", $("#FileDescription").val());
+                $.ajax({
+                    url: '@Url.Action("LoadFile","Files")',
+                    type: "POST",
+                    data: dataString,
+                    contentType: false,
+                    processData: false,
+                    async: false,
+                    success: function (data) {
+                        if (typeof (data.Value) != "undefined") {
+                            alert(data.Message);
+                        } else {
+                            alert("Archivo subido con exito")
+                        }
+                    },
+                    error: function (data) {
+
+                    }
+
+                })
+            });
+        });
+
+        </script>*@
+
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

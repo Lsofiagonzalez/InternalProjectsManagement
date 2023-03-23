@@ -1,0 +1,112 @@
+﻿@model IEnumerable<Core.Models.User.Files>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Layouts/Dashboard.cshtml";
+}
+
+@{
+    ViewBag._Active = "Index";
+    ViewBag._Panel = "Home";
+}
+
+
+
+
+<br />
+<br />
+<div class=" segment">
+    <h1 class="ui header" align="center">
+        <div class="content">
+            Módulo  de Lista  de Archivos
+            <div class="sub header">
+                <div class="ui breadcrumb">
+                    <a class="section" href="@Url.Action("home","Home")">Inicio</a>
+                    <div class="divider"> / </div>
+                    <div class="active section" style="text-transform:lowercase">Lista  de Archivos</div>
+                </div>
+            </div>
+        </div>
+    </h1>
+    <div class="ui hidden divider"></div>
+    <form action="" method="get" align="right">
+        <a href="@Url.Action("create")" class="ui download blue button">
+            CREAR NUEVO
+        </a>
+
+    </form>
+</div>
+
+<br />
+<br />
+
+<div class="ui grid">
+    <div class="one wide column"></div>
+    <div class="ten wide column">
+        <div class="ui segments">
+                <table id="tabla" class="ui celled small hover striped table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Histories.HistoryName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FileName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DisplayName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FileDescription)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Url)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedByName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UpdatedByName)
+                            </th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Histories.HistoryName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FileName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DisplayName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FileDescription)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Url)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedByName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UpdatedByName)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Editar Comentario", "Edit", new { id = item.Id }, new { @class = "ui download blue button" })
+                                    @Html.ActionLink("Detalle", "Details", new { id = item.Id }, new { @class = "ui download  button" })
+                                   @* @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "ui download black button" })*@
+                                    @Html.ActionLink("Descargar Archivo", "Document", new { id = item.Id }, new { @class = "ui download  black button" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

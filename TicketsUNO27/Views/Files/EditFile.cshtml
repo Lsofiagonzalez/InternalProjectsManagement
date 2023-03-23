@@ -1,0 +1,132 @@
+﻿@model Core.Models.User.Files
+
+@{
+    ViewBag.Title = "EditFile";
+    Layout = "~/Views/Layouts/Dashboard.cshtml";
+}
+
+@{
+    ViewBag._Active = "EditFile";
+    ViewBag._Panel = "Home";
+}
+
+
+
+
+<br />
+<br />
+<div class=" segment">
+    <h1 class="ui header">
+        <div class="content">
+            <big style="text-transform:uppercase">Módulo  de Edicion de Archivos</big>
+            <div class="sub header">
+                <div class="ui breadcrumb">
+                    <a class="section" href="@Url.Action("home","Home")">Inicio</a>
+                    <div class="divider"> / </div>
+                    <a class="section" href="@Url.Action("Index")">Listar</a>
+                    <div class="divider"> / </div>
+                    <div class="active section" style="text-transform:lowercase">Edición de Files</div>
+                </div>
+            </div>
+        </div>
+
+    </h1>
+    <div class="ui hidden divider"></div>
+
+</div>
+<br />
+<br />
+
+<div class="ui grid">
+    <div class="one wide column"></div>
+    <div class="ten wide column">
+        <div class="ui segments">
+            <div class="ui teal segment">
+                @using (Html.BeginForm("Edit", "Files", FormMethod.Post, new { @class = "ui large form", autofocus = "" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                    <form action="javascripts:;">
+                        <div class="field">
+                            @Html.LabelFor(model => model.DisplayName, htmlAttributes: new { @class = "" })
+
+                            <div class="ui mini icon input">
+                                @Html.EditorFor(model => model.DisplayName, new { htmlAttributes = new { @class = "" } })
+                                <i class="keyboard outline outline icon"></i>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.DisplayName, "", new { @class = "ui error message" })
+                        </div>
+                        <div class="field">
+                            @Html.LabelFor(model => model.FileDescription, htmlAttributes: new { @class = "" })
+
+                            <div class="ui mini icon input">
+                                @Html.EditorFor(model => model.FileDescription, new { htmlAttributes = new { @class = "" } })
+                                <i class="keyboard outline outline icon"></i>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.FileDescription, "", new { @class = "ui error message" })
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <input type="file" name="fileUpload" id="fileUpload" multiple accept="image/*,.xls;.xlsx;jpg;png;doc;docx;ods;odt;pdf" />
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <br />
+                            <input type="button" id="btn-send-ajax" value="Enviar" class="ui  large blue submit button" />
+                            @Html.ActionLink("Regresar", "Index", null, new { @class = "ui  large blue submit button" })
+
+                        </div>
+
+                    </form>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btn-send-ajax").click(function () {
+
+                var selectFile = ($("#fileUpload")).get(0).files;
+                var dataString = new FormData();
+
+                for (var i = 0; i < selectFile.length; i++) {
+                    dataString.append("fileUpload", selectFile[i]);
+                }
+                dataString.append("DisplayName", $("#DisplayName").val());
+                dataString.append("FileDescription", $("#FileDescription").val());
+                $.ajax({
+                    url: '@Url.Action("LoadFile","Files")',
+                    type: "POST",
+                    data: dataString,
+                    contentType: false,
+                    processData: false,
+                    async: false,
+                    success: function (data) {
+                        if (typeof (data.Value) != "undefined") {
+                            alert(data.Message);
+                        } else {
+                            setTimeout(function () { location.href = "/Files/Index" }, 2000);
+                            alert("Archivo subido con exito")
+                        }
+                    },
+                    error: function (data) {
+
+                    }
+
+                })
+            });
+        });
+
+    </script>
+
+}
+
+

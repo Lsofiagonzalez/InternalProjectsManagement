@@ -1,0 +1,39 @@
+{
+  "grandes superficies": {
+    "administrador": {
+      "vistas": {
+        "puntos de atencion": {
+          "vista para asignar puntos de atencion a un lider de zona": false,
+          "reportes de puntos de atencion": false
+        },
+        "productos ": {
+          "crear caracteristicas a los productos ": false
+        }
+      },
+      "modelos": {
+
+      }
+    },
+    "vendedor": {
+      "vistas": {
+        "inventario ": {
+          "Recibir inventario": true,
+          "Consultar Inventario": true,
+          "Solicitar Traslado ": false,
+          "Aprobar traslado ": false
+        },
+        "ventas": {
+          "crear venta": true,
+          "listar ventas": true
+        },
+        "Clientes": {
+          "Crear Cliente": true,
+          "Crear Referido": true
+          
+        }
+      }
+    }
+
+  }
+  
+}

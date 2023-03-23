@@ -1,0 +1,165 @@
+﻿@model IEnumerable<Core.Models.User.Groups>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Layouts/Dashboard.cshtml";
+}
+
+@{
+    ViewBag._Active = "Index";
+    ViewBag._Panel = "Home";
+}
+
+<div class=" segment">
+    <h1 class="ui header" align="center">
+        <big style="text-transform:uppercase">Módulo  de Lista  de Grupos</big>
+        <div class="sub header">
+            <div class="ui breadcrumb">
+                <a class="section" href="@Url.Action("Home","Home")">Inicio</a>
+                <div class="divider"> / </div>
+                <div class="active section">Lista  de Grupos</div>
+            </div>
+        </div>
+    </h1>
+    <div class="ui hidden divider"></div>
+
+    @if (Session["Rol"]!=null)
+        { string rol =(string) Session["Rol"];
+            if (rol.Equals("Admin"))
+            {
+            <form action="" method="get" align="right">
+                <a href="@Url.Action("create")" class="ui  large blue submit button">
+                    Crear Nuevo Grupo
+                </a>
+
+                @*<div class="ui action input " align="right">
+                        <input type="text" name="Name" placeholder="Nombre" value="@ViewBag.FName">
+                        <button class="ui icon button" id="btnCon">
+                            <i class="search icon"></i>
+                        </button>
+                    </div>*@
+
+            </form>
+        }
+
+    }
+
+</div>
+<br />
+<br />
+
+<div class="ui grid" align="center">
+    @*<div class="one wide column"></div>
+        <div class="one wide column"></div>*@
+    @*<div class="fourteen wide column">*@
+    @*<div class="ui segments">*@
+    @*<div class="ui teal segment">*@
+
+    @*<table id="tabla" class="ui celled small hover striped table">
+        <thead>
+            <tr>
+                <th>
+                    Nombre de Proyecto
+                </th>
+                <th>
+                    Nombre de Grupo
+                </th>
+                <th>
+                   Creado por:
+                </th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>*@
+
+    @foreach (var item in Model)
+    {
+        @*<div class="one wide column"></div>*@
+        <div class="one wide column"></div>
+        <div class="ui card">
+            <div class="content">
+                <div class="ui big attached label" style="text-transform:uppercase; color:black"> @Html.DisplayFor(modelItem => item.GroupName)</div>
+            </div>
+            <br />
+            <div class="content">
+                <div class="ui small feed">
+                    <div class="event">
+                        <div class="content">
+                            <div class="summary">
+                                <h4><b>Nombre Proyecto:</b></h4>
+                                <div class="ui bulleted list">
+                                    <p>@Html.DisplayFor(modelItem => item.Projects.ProjectName)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event">
+                        <div class="content">
+                            <div class="summary">
+                                <h4><b>Creado Por:</b></h4>
+                                <div class="ui bulleted list">
+                                    <p>@Html.DisplayFor(modelItem => item.CreatedByName)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="extra content">
+                @if (Session["Rol"] != null)
+                {
+                    string rol = (string)Session["Rol"];
+                    if (rol.Equals("Admin"))
+                    {
+                        <div class="ui blue buttons">
+                            <div class="ui button">Add</div>
+                            <div class="ui floating dropdown icon button" tabindex="0">
+                                <i class="dropdown icon"></i>
+                                <div class="menu transition hidden" tabindex="-1">
+                                    <a href="@Url.Action("Edit", "Groups",new { id = item.Id })" class="item" style="color:black">Editar</a>
+                                    <a href="@Url.Action("Create", "Users_Groups")" class="item" style="color:black">Agregar Usuario</a>
+                                    <a href="@Url.Action("Delete", "Groups",new { id = item.Id })" class="item" style="color:black"> Eliminar </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                }
+                
+                @Html.ActionLink("Detalle", "DetailsGroup", new { id = item.Id }, new { @class = "ui download  button" })
+            </div>
+        </div>
+        <div class="one wide column"></div>
+        @*<tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Projects.ProjectName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GroupName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedByName)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "ui  large blue submit button" })
+                    @Html.ActionLink("Detalle", "Details", new { id = item.Id }, new { @class = "ui download  button" })
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "ui download black button" })
+                </td>
+            </tr>*@
+    }
+    @*</tbody>
+        </table>*@
+</div>
+
+@section Scripts {
+
+    <script>
+        $('.ui.dropdown')
+            .dropdown();
+    </script>
+}
+
+
+@*</div>*@
+@*</div>*@
+@*</div>*@

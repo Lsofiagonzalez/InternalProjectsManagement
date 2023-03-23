@@ -1,0 +1,206 @@
+﻿<#@ template language="C#" HostSpecific="True" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="Imports.include.t4" #>
+@model IEnumerable<#= "<" + ViewDataTypeName + ">" #>
+<#
+string boolType = "System.Boolean";
+string DateType = "System.DateTime";
+// The following chained if-statement outputs the file header code and markup for a partial view, a view using a layout page, or a regular view.
+if(IsPartialView) {
+#>
+
+<#
+} else if(IsLayoutPageSelected) {
+#>
+
+@{
+    ViewBag.Title = "<#= ViewName#>";
+<#
+if (!String.IsNullOrEmpty(LayoutPageFile)) {
+#>
+    Layout = "<#= LayoutPageFile#>";
+<#
+}
+#>
+}
+
+@{
+	ViewBag._Active = "<#= ViewName#>";
+	ViewBag._Panel = "Home";
+}
+
+
+<#
+} else {
+#>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title><#= ViewName #></title>
+</head>
+<body>
+<#
+    PushIndent("    ");
+}
+#>
+
+
+<br />
+<br />
+<div class=" segment">
+    <h1 class="ui header">
+        <img src="~/Content/images/logo1.png">
+        <div class="content">
+            Módulo  de Lista  de <#= ViewDataTypeShortName #>
+            <div class="sub header">
+                <div class="ui breadcrumb">
+                    <a class="section"  href="@Url.Action("home","Home")">Inicio</a>
+                    <div class="divider"> / </div>
+                    <div class="active section" style="text-transform:lowercase">Lista  de <#= ViewDataTypeShortName #></div>
+                </div>
+            </div>
+        </div>
+    </h1>
+    <div class="ui hidden divider"></div>
+    <form action="" method="get">
+        <a href="@Url.Action("create")" class="ui download red button">
+            CREAR NUEVO
+        </a>
+
+        <div class="ui action input">
+            <input type="text" name="Name" placeholder="Nombre" value="@ViewBag.FName">
+            <button class="ui icon button" id="btnCon">
+                <i class="search icon"></i>
+            </button>
+        </div>
+
+    </form>
+</div>
+<h4 class="ui horizontal divider header">
+    <button class="ui  large red submit button">
+        <i class="tasks icon"></i>
+        LISTA DE <#= ViewDataTypeShortName #>
+    </button>
+
+</h4>
+
+
+
+<div class="ui grid">
+    <div class="one wide column"></div>
+    <div class="fourteen wide column">
+        <div class="ui segments">
+            <div class="ui teal segment">
+				<table id="tabla" class="ui celled small hover striped table">
+					<thead>
+						<tr>
+							<#
+							IEnumerable<PropertyMetadata> properties = ModelMetadata.Properties;
+							foreach (PropertyMetadata property in properties) {
+								if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey  && property.PropertyName != "CreatedAt" &&  property.PropertyName != "UpdatedAt" && property.PropertyName != "CreatedBy"  && property.PropertyName != "UpdatedBy"
+						&&  property.PropertyName != "DeletedAt") {
+							#>
+							<#
+									// We do not want to show any association properties for which there is
+									// no associated foreign key.
+									if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
+										continue;
+									}
+							#>
+									<th>
+										@Html.DisplayNameFor(model => model.<#= GetValueExpression(property) #>)
+									</th>
+							<#
+								}
+							}
+							#>
+									<th>Acciones</th>
+							</tr>
+					</thead>
+					<tbody>
+
+							@foreach (var item in Model) {
+								<tr>
+							<#
+							foreach (PropertyMetadata property in properties) {
+								if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey && property.PropertyName != "CreatedAt" &&  property.PropertyName != "UpdatedAt" && property.PropertyName != "CreatedBy" && property.PropertyName != "UpdatedBy" 
+						&&  property.PropertyName != "DeletedAt") {
+							#>
+							<#
+									// We do not want to show any association properties for which there is
+									// no associated foreign key.
+									if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
+										continue;
+									}
+							#>
+							<#
+								bool isCheckbox = property.TypeName.Equals(boolType);
+								bool isDateTime = property.TypeName.Equals(DateType);
+								if (isCheckbox) {
+							#>
+									<td>
+									 <div class="ui toggle  checkbox" >
+                                        <input type="checkbox"  disabled="disabled"name="public"  @if (item.<#= GetValueExpression(property) #> == true) {@Html.Raw("checked"); }>
+                                        <label></label>
+                                    </div>
+									</td>
+
+							<#
+								} else{
+								
+							#>
+									<td>
+										@Html.DisplayFor(modelItem => <#= "item." + GetValueExpression(property) #>)
+									</td>
+							<#
+								}
+								}
+							}
+
+							string pkName = GetPrimaryKeyName();
+							if (pkName != null) {
+							#>
+									<td>
+										@Html.ActionLink("Editar", "Edit", new { id=item.<#= pkName #> }, new {  @class = "ui download red button" })
+										@Html.ActionLink("Detalle", "Details", new { id=item.<#= pkName #> }, new {  @class = "ui download  button" })
+										@Html.ActionLink("Eliminar", "Delete", new { id=item.<#= pkName #> } , new {  @class = "ui download black button" })
+									</td>
+							<#
+							} else {
+							#>
+									<td>
+										@Html.ActionLink("Editar", "Edit", new { /* id=item.PrimaryKey */ } , new {  @class = "btn btn-xs btn-success" })
+										@Html.ActionLink("Detalle", "Details", new { /* id=item.PrimaryKey */ } , new {  @class = "btn btn-xs btn-default" }) 
+										@Html.ActionLink("Eliminar", "Delete", new { /* id=item.PrimaryKey */ } , new {  @class = "btn btn-xs btn-danger" })
+									</td>
+							<#
+							}
+							#>
+								</tr>
+							}
+					</tbody>
+				</table>
+            </div>
+        </div>
+    </div>
+</div>
+<#
+// The following code closes the tag used in the case of a view using a layout page and the body and html tags in the case of a regular view page
+#>
+<#
+if(!IsPartialView && !IsLayoutPageSelected) {
+    ClearIndent();
+#>
+</body>
+</html>
+<#
+}
+#>
+<#@ include file="ModelMetadataFunctions.cs.include.t4" #>

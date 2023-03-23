@@ -1,0 +1,28 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    background-color: #27262C;
+}
+
+#Banner {
+    width: 100%;
+    height: 200px;
+    margin: 0;
+    padding: 0;
+}
+#toolBar{
+    
+    color:black
+}
+#profile {
+   margin-top:5px;
+}
+
+#button{
+    position:absolute;
+    right:0;
+}
+
+#add {
+    width: auto;
+}

@@ -1,0 +1,155 @@
+﻿<#@ template language="C#" HostSpecific="True" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="Imports.include.t4" #>
+@model <#= ViewDataTypeName #>
+<#
+// The following chained if-statement outputs the file header code and markup for a partial view, a view using a layout page, or a regular view.
+if(IsPartialView) {
+#>
+
+<#
+} else if(IsLayoutPageSelected) {
+#>
+
+@{
+    ViewBag.Title = "<#= ViewName#>";
+<#
+if (!String.IsNullOrEmpty(LayoutPageFile)) {
+#>
+    Layout = "<#= LayoutPageFile#>";
+<#
+}
+#>
+}
+
+
+@{
+	ViewBag._Active = "<#= ViewName#>";
+	ViewBag._Panel = "Home";
+}
+
+
+<#
+} else {
+#>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title><#= ViewName #></title>
+</head>
+<body>
+<#
+    PushIndent("    ");
+}
+#>
+
+
+<br />
+<br />
+<div class=" segment">
+    <h1 class="ui header">
+        <img src="~/Content/images/logo1.png">
+        <div class="content">
+            Módulo  de detalle  de @ViewBag.Name
+            <div class="sub header">
+                <div class="ui breadcrumb">
+                    <a class="section"  href="@Url.Action("home","Home")">Inicio</a>
+                    <div class="divider"> / </div>
+                    <a class="section" href="@Url.Action("Index")">Listar</a>
+                    <div class="divider"> / </div>
+                    <div class="active section" style="text-transform:lowercase">Detalle de <#= ViewDataTypeShortName #></div>
+                </div>
+            </div>
+        </div>
+
+    </h1>
+    <div class="ui hidden divider"></div>
+
+</div>
+
+
+
+<h4 class="ui horizontal divider header">
+    <button class="ui  large red submit button">
+        <i class="sticky note icon"></i>
+        Detalle de  <#= ViewDataTypeShortName #>
+    </button>
+
+</h4>
+
+<div class="ui grid">
+        <div class="ten wide centered column">
+            <div class="ui segments">
+                <div class="ui teal segment">
+			<table id="tabla" class="ui celled small hover striped table">
+				<tbody>
+						<#
+						foreach (PropertyMetadata property in ModelMetadata.Properties) {
+
+							if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey) {
+						#>
+						<#
+								// We do not want to show any association properties for which there is
+								// no associated foreign key.
+								if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
+									continue;
+								}
+						#>
+							<tr>
+								<td>
+									@Html.DisplayNameFor(model => model.<#= GetValueExpression(property) #>)
+								</td>
+
+								<td>
+									@Html.DisplayFor(model => model.<#= GetValueExpression(property) #>)
+								</td>
+							</tr>
+						<#
+							}
+						}
+						#>
+				</tbody>
+			</table>
+<#
+string pkName = GetPrimaryKeyName();
+if (pkName != null) {
+#>
+	@Html.ActionLink("Editar", "Edit", new { id = Model.<#= pkName #> }, new { @class = "ui red button" })
+	@Html.ActionLink("Regresar to List", "Index",null, new { @class = "ui button" })
+<#
+} else {
+#>
+	@Html.ActionLink("Editar", "Edit", new { /* id = Model.PrimaryKey */ }, new { @class = "ui red button" })
+	@Html.ActionLink("Regresar a la lista", "Index",null, new { @class = "ui button" })
+<#
+}
+#>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<#
+// The following code closes the tag used in the case of a view using a layout page and the body and html tags in the case of a regular view page
+#>
+<#
+if(!IsPartialView && !IsLayoutPageSelected) {
+    ClearIndent();
+#>
+</body>
+</html>
+<#
+}
+#>
+<#@ include file="ModelMetadataFunctions.cs.include.t4" #>

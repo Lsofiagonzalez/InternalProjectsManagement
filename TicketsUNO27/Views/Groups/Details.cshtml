@@ -1,0 +1,150 @@
+﻿@model Core.Models.User.Groups
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Layouts/Dashboard.cshtml";
+}
+
+
+@{
+    ViewBag._Active = "Details";
+    ViewBag._Panel = "Home";
+}
+
+
+<br />
+<br />
+<div class=" segment">
+    <h1 class="ui header" align="center">
+        <div class="content">
+            <big style="text-transform:uppercase">
+                Módulo  de detalle  de @ViewBag.Name 
+            </big>
+                <div class="sub header">
+                    <div class="ui breadcrumb">
+                        <a class="section" href="@Url.Action("home","Home")">Inicio</a>
+                        <div class="divider"> / </div>
+                        <a class="section" href="@Url.Action("Index")">Listar</a>
+                        <div class="divider"> / </div>
+                        <div class="active section" style="text-transform:lowercase">Detalle de Grupo</div>
+                    </div>
+                </div>
+        </div>
+
+    </h1>
+    <div class="ui hidden divider"></div>
+
+</div>
+
+
+<div class="ui grid">
+    <div class="ten wide centered column">
+        <div class="ui segments">
+            <div class="ui teal segment">
+                <table id="tabla" class="ui celled small hover striped table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <b>Nombre Proyecto:</b>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.Projects.ProjectName)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b> Nombre Grupo:</b>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.GroupName)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Fecha Creación:</b>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.CreatedAt)
+                            </td>
+                        </tr>
+                        @*<tr>
+            <td>
+                @Html.DisplayNameFor(model => model.UpdatedAt)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.UpdatedAt)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.DeletedAt)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.DeletedAt)
+            </td>
+        </tr>*@
+                        @*<tr>
+            <td>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.CreatedBy)
+            </td>
+        </tr>*@
+                        @*<tr>
+            <td>
+                @Html.DisplayNameFor(model => model.UpdatedBy)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.UpdatedBy)
+            </td>
+        </tr>*@
+                        <tr>
+                            <td>
+                                <b> Creado Por:</b>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.CreatedByName)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <b>Colaboradores:</b>
+                            </td>
+
+                            <td>
+                                
+                            </td>
+                        </tr>
+
+
+                        @*<tr>
+            <td>
+                @Html.DisplayNameFor(model => model.UpdatedByName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.UpdatedByName)
+            </td>
+        </tr>*@
+                    </tbody>
+                </table>
+                @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "ui blue button" })
+                @Html.ActionLink("Regresar", "Index", null, new { @class = "ui button" })
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

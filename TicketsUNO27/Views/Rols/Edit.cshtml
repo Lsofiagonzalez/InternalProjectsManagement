@@ -1,0 +1,129 @@
+﻿@model Core.Models.User.Rols
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Layouts/Dashboard.cshtml";
+}
+
+@{
+    ViewBag._Active = "Edit";
+    ViewBag._Panel = "Home";
+}
+
+
+<div class=" segment">
+    <h1 class="ui header" align="center">
+        <div class="content">
+            <big style="text-transform:uppercase">
+                Módulo  de Edición de Roles
+                </big>
+                <div class="sub header">
+                    <div class="ui breadcrumb">
+                        <a class="section" href="@Url.Action("home","Home")">Inicio</a>
+                        <div class="divider"> / </div>
+                        <a class="section" href="@Url.Action("Index")">Listar</a>
+                        <div class="divider"> / </div>
+                        <div class="active section">Edición de Roles</div>
+                    </div>
+                </div>
+        </div>
+
+    </h1>
+    <div class="ui hidden divider"></div>
+
+</div>
+<br />
+<div class="ui grid">
+    <div class="ten wide centered column">
+        <div class="ui segments">
+            <div class="ui teal segment">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "ui large form", autofocus = "" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="field">
+                        @Html.LabelFor(model => model.RolName,"Nombre de Rol:", htmlAttributes: new { @class = "" })
+
+                        <div class="ui mini icon input">
+                            @Html.EditorFor(model => model.RolName, new { htmlAttributes = new { @class = "" } })
+                            <i class="keyboard outline outline icon"></i>
+                        </div>
+
+
+                        @Html.ValidationMessageFor(model => model.RolName, "", new { @class = "ui error message" })
+                    </div>
+
+                    <div class="field">
+                        @Html.LabelFor(model => model.Description,"Descripcion:", htmlAttributes: new { @class = "" })
+
+                        <div class="ui mini icon input">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "" } })
+                            <i class="keyboard outline outline icon"></i>
+                        </div>
+
+
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "ui error message" })
+                    </div>
+
+                    <div class="field">
+                        @Html.LabelFor(model => model.DisplayName,"Nombre para Mostrar:", htmlAttributes: new { @class = "" })
+
+                        <div class="ui mini icon input">
+                            @Html.EditorFor(model => model.DisplayName, new { htmlAttributes = new { @class = "" } })
+                            <i class="keyboard outline outline icon"></i>
+                        </div>
+
+
+                        @Html.ValidationMessageFor(model => model.DisplayName, "", new { @class = "ui error message" })
+                    </div>
+
+                    <div class="field">
+                        @Html.LabelFor(model => model.ParentId, "Rol Padre:",htmlAttributes: new { @class = "" })
+
+                        <div class="ui mini icon input">
+                            @Html.EditorFor(model => model.ParentId, new { htmlAttributes = new { @class = "" } })
+                            <i class="keyboard outline outline icon"></i>
+                        </div>
+
+
+                        @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "ui error message" })
+                    </div>
+
+                    @*<div class="field">
+                            @Html.LabelFor(model => model.CreatedByName, htmlAttributes: new { @class = "" })
+
+                            <div class="ui mini icon input">
+                                @Html.EditorFor(model => model.CreatedByName, new { htmlAttributes = new { @class = "" } })
+                                <i class="keyboard outline outline icon"></i>
+                            </div>
+
+
+                            @Html.ValidationMessageFor(model => model.CreatedByName, "", new { @class = "ui error message" })
+                        </div>
+
+                        <div class="field">
+                            @Html.LabelFor(model => model.UpdatedByName, htmlAttributes: new { @class = "" })
+
+                            <div class="ui mini icon input">
+                                @Html.EditorFor(model => model.UpdatedByName, new { htmlAttributes = new { @class = "" } })
+                                <i class="keyboard outline outline icon"></i>
+                            </div>
+
+
+                            @Html.ValidationMessageFor(model => model.UpdatedByName, "", new { @class = "ui error message" })
+                        </div>*@
+
+
+                    <div class="field">
+                        <br />
+                        <input type="submit" value="Guardar" class="ui  large blue submit button" />
+                        @Html.ActionLink("Regresar", "Index", null, new { @class = "ui  large submit button" })
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

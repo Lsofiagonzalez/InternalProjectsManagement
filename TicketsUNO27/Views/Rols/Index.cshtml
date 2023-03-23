@@ -1,0 +1,178 @@
+﻿@model IEnumerable<Core.Models.User.Rols>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Layouts/Dashboard.cshtml";
+}
+
+@{
+    ViewBag._Active = "Index";
+    ViewBag._Panel = "Home";
+}
+
+<div class=" segment">
+    <h1 class="ui header" align="center">
+        <big style="text-transform:uppercase">Módulo  de Lista  de Roles</big>
+        <div class="sub header">
+            <div class="ui breadcrumb">
+                <a class="section" href="@Url.Action("home","Home")">Inicio</a>
+                <div class="divider"> / </div>
+                <div class="active section">Lista  de Roles</div>
+            </div>
+        </div>
+    </h1>
+    <div class="ui hidden divider"></div>
+    @if (Session["Rol"] != null)
+    {
+        string rol = (string)Session["Rol"];
+        if (rol.Equals("Admin"))
+        {
+            <form action="" method="get">
+                <a href="@Url.Action("create")" class="ui  large blue submit button">
+                    Crear Nuevo Rol
+                </a>
+            </form>
+        }
+
+    }
+
+</div>
+<br />
+<br />
+<div class="ui grid">
+    <div class="one wide column"></div>
+    <div class="one wide column"></div>
+    @*<div class="fourteen wide column">
+        <div class="ui segments">
+            <div class="ui teal segment">
+                <table id="tabla" class="ui celled small hover striped table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.RolName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DisplayName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ParentId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedByName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UpdatedByName)
+                            </th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>*@
+
+    @foreach (var item in Model)
+    {
+
+        <div class="ui card">
+            <div class="content">
+                <div class="ui big attached label" style="text-transform:uppercase; color:black">@Html.DisplayFor(modelItem => item.DisplayName)</div>
+            </div>
+            <br />
+            <div class="content">
+                <div class="ui small feed">
+                    <div class="event">
+                        <div class="content">
+                            <div class="summary">
+                                <h4><b>Descripción:</b></h4>
+                                <div class="ui bulleted list">
+                                    <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event">
+                        <div class="content">
+                            <div class="summary">
+                                <h4><b>Rol Padre :</b></h4>
+                                <div class="ui bulleted list">
+                                    <p> @Html.DisplayFor(modelItem => item.RolName)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event">
+                        <div class="content">
+                            <div class="summary">
+                                <h4><b>Credor Por:</b></h4>
+                                <div class="ui bulleted list">
+                                    <p> @Html.DisplayFor(modelItem => item.RolName)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="extra content">
+                @if (Session["Rol"] != null)
+                {
+                    string rol = (string)Session["Rol"];
+                    if (rol.Equals("Admin"))
+                    {
+                        <div class="ui blue buttons">
+                            <div class="ui button">Editar</div>
+                            <div class="ui floating dropdown icon button" tabindex="0">
+                                <i class="dropdown icon"></i>
+                                <div class="menu transition hidden" tabindex="-1">
+                                    <a href="@Url.Action("Edit", "Rols",new { id = item.Id })" class="item" style="color:black">Editar</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                }
+                
+                @Html.ActionLink("Detalle", "Details", new { id = item.Id }, new { @class = "ui download  button" })
+            </div>
+        </div>
+        <div class="one wide column"></div>
+        @*<tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RolName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DisplayName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ParentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedByName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedByName)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "ui download red button" })
+                    @Html.ActionLink("Detalle", "Details", new { id = item.Id }, new { @class = "ui download  button" })
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "ui download black button" })
+                </td>
+            </tr>*@
+    }
+</div>
+    @section Scripts {
+
+        <script>
+        $('.ui.dropdown')
+            .dropdown();
+        </script>
+    }
+    @*</tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>*@

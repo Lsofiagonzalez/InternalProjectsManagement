@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Layouts/ToolBar.cshtml";
+}
+
+@model Core.Models.User.Users
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="~/Content/ITPMLogin.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <img id="Banner" src="~/Content/images/Banner.png" />
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <br>
+            <h2 class="ui orange image header">
+                Log-in to your account
+            </h2>
+            <div class="ui raised very padded text container segment">
+
+                @using (Html.BeginForm("Log", "Login", FormMethod.Get, new { @class = "ui large form", autofocus = "" }))
+                {
+                    <div class="ui stacked segment">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                @Html.EditorFor(model => model.CC, new { htmlAttributes = new { @class = "", autofocus = "", @placeholder = "Ingrese su documento" } })
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="lock icon"></i>
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "", @placeholder = "Ingrese la contraseña", type = "password" } })
+                            </div>
+                        </div>
+                        <div class="field">
+                            <input type="submit" name="send" value="Ingresar" class="ui fluid large orange submit button" />
+                        </div>
+                    </div>
+                    if (ViewBag.Error != null)
+                    {
+
+                        <div class="ui error visible  message">@ViewBag.Error</div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>

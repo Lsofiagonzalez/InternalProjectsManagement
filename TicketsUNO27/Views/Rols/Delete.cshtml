@@ -1,0 +1,175 @@
+﻿@model Core.Models.User.Rols
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Layouts/Dashboard.cshtml";
+}
+
+@{
+    ViewBag._Active = "Delete";
+    ViewBag._Panel = "Home";
+}
+
+
+<br />
+<br />
+<div class=" segment">
+    <h1 class="ui header">
+        <img src="~/Content/images/logo1.png">
+        <div class="content">
+            Módulo  de eliminación  de @ViewBag.Name
+            <div class="sub header">
+                <div class="ui breadcrumb">
+                    <a class="section" href="@Url.Action("home","Home")">Inicio</a>
+                    <div class="divider"> / </div>
+                    <a class="section" href="@Url.Action("Index")">Listar</a>
+                    <div class="divider"> / </div>
+                    <div class="active section" style="text-transform:lowercase">Eliminar Rols</div>
+                </div>
+            </div>
+        </div>
+
+    </h1>
+    <div class="ui hidden divider"></div>
+
+</div>
+
+
+
+<h4 class="ui horizontal divider header">
+    <button class="ui  large red submit button">
+        <i class="eraser icon"></i>
+        Eliminar  @Html.DisplayFor(model => model.Name)
+    </button>
+
+</h4>
+
+
+<div class="ui grid">
+    <div class="ten wide centered column">
+        <div class="ui segments">
+            <div class="ui teal segment">
+                <table id="tabla" class="ui celled small hover striped table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.RolName)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.RolName)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.Description)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.DisplayName)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.DisplayName)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.ParentId)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.ParentId)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.CreatedAt)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.CreatedAt)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.UpdatedAt)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.UpdatedAt)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.DeletedAt)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.DeletedAt)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.CreatedBy)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.CreatedBy)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.UpdatedBy)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.UpdatedBy)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.CreatedByName)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.CreatedByName)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.UpdatedByName)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.UpdatedByName)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Eliminar" class="ui button red" />
+                        @Html.ActionLink("Regresar", "Index", null, new { @class = "ui button " })
+                    </div>
+                }
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+</div>

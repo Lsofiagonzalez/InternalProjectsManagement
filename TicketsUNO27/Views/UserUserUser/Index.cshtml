@@ -1,0 +1,138 @@
+﻿@model IEnumerable<Core.Models.User.Users>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Layouts/Dashboard.cshtml";
+}
+
+@{
+	ViewBag._Active = "Index";
+	ViewBag._Panel = "Home";
+}
+
+
+
+
+<br />
+<br />
+<div class=" segment">
+    <h1 class="ui header">
+        <img src="~/Content/images/logo1.png">
+        <div class="content">
+            Módulo  de Lista  de Users
+            <div class="sub header">
+                <div class="ui breadcrumb">
+                    <a class="section"  href="@Url.Action("home","Home")">Inicio</a>
+                    <div class="divider"> / </div>
+                    <div class="active section" style="text-transform:lowercase">Lista  de Users</div>
+                </div>
+            </div>
+        </div>
+    </h1>
+    <div class="ui hidden divider"></div>
+    <form action="" method="get">
+        <a href="@Url.Action("create")" class="ui download red button">
+            CREAR NUEVO
+        </a>
+
+        <div class="ui action input">
+            <input type="text" name="Name" placeholder="Nombre" value="@ViewBag.FName">
+            <button class="ui icon button" id="btnCon">
+                <i class="search icon"></i>
+            </button>
+        </div>
+
+    </form>
+</div>
+<h4 class="ui horizontal divider header">
+    <button class="ui  large red submit button">
+        <i class="tasks icon"></i>
+        LISTA DE Users
+    </button>
+
+</h4>
+
+
+
+<div class="ui grid">
+    <div class="one wide column"></div>
+    <div class="fourteen wide column">
+        <div class="ui segments">
+            <div class="ui teal segment">
+				<table id="tabla" class="ui celled small hover striped table">
+					<thead>
+						<tr>
+																							<th>
+										@Html.DisplayNameFor(model => model.Rol.RolName)
+									</th>
+																							<th>
+										@Html.DisplayNameFor(model => model.UserName)
+									</th>
+																							<th>
+										@Html.DisplayNameFor(model => model.LastName)
+									</th>
+																							<th>
+										@Html.DisplayNameFor(model => model.NumberPhone)
+									</th>
+																							<th>
+										@Html.DisplayNameFor(model => model.CC)
+									</th>
+																							<th>
+										@Html.DisplayNameFor(model => model.Password)
+									</th>
+																							<th>
+										@Html.DisplayNameFor(model => model.ProfilePhoto)
+									</th>
+																							<th>
+										@Html.DisplayNameFor(model => model.CreatedByName)
+									</th>
+																							<th>
+										@Html.DisplayNameFor(model => model.UpdatedByName)
+									</th>
+																<th>Acciones</th>
+							</tr>
+					</thead>
+					<tbody>
+
+							@foreach (var item in Model) {
+								<tr>
+																														<td>
+										@Html.DisplayFor(modelItem => item.Rol.RolName)
+									</td>
+																														<td>
+										@Html.DisplayFor(modelItem => item.UserName)
+									</td>
+																														<td>
+										@Html.DisplayFor(modelItem => item.LastName)
+									</td>
+																														<td>
+										@Html.DisplayFor(modelItem => item.NumberPhone)
+									</td>
+																														<td>
+										@Html.DisplayFor(modelItem => item.CC)
+									</td>
+																														<td>
+										@Html.DisplayFor(modelItem => item.Password)
+									</td>
+																														<td>
+										@Html.DisplayFor(modelItem => item.ProfilePhoto)
+									</td>
+																														<td>
+										@Html.DisplayFor(modelItem => item.CreatedByName)
+									</td>
+																														<td>
+										@Html.DisplayFor(modelItem => item.UpdatedByName)
+									</td>
+																<td>
+										@Html.ActionLink("Editar", "Edit", new { id=item.Id }, new {  @class = "ui download red button" })
+										@Html.ActionLink("Detalle", "Details", new { id=item.Id }, new {  @class = "ui download  button" })
+										@Html.ActionLink("Eliminar", "Delete", new { id=item.Id } , new {  @class = "ui download black button" })
+									</td>
+															</tr>
+							}
+					</tbody>
+				</table>
+            </div>
+        </div>
+    </div>
+</div>

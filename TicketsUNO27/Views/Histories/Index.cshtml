@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Core.Models.User.Histories>
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Layouts/Dashboard.cshtml";
+}
+
+<div class=" segment">
+    <h1 class="ui header" align="center">
+        <div class="content">
+            <h1>Lista de Historial</h1>
+            <div class="sub header" align="right">
+                <div class="ui breadcrumb">
+                    <a class="section" href="@Url.Action("Home","Home")">Inicio</a>
+                    <div class="divider"> / </div>
+                    <a class="section" href="@Url.Action("Index")">Listar</a>
+                    <div class="divider"> / </div>
+                    <div class="active section">Lista de Historial</div>
+                </div>
+            </div>
+        </div>
+
+    </h1>
+    <div class="ui hidden divider"></div>
+   
+
+</div>
+
+<br />
+
+    <div class="ui grid">
+        <div class="one wide column"></div>
+        <div class="fourteen wide column">
+            <div class="ui segments">
+                <div class="ui teal segment" style="width:auto;">
+                    <table id="tabla" class="ui celled small hover striped table" >
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Projects.DisplayName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.HistoryName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.HistoryDescription)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CreatedByName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UpdatedByName)
+                                </th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Projects.DisplayName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.HistoryName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.HistoryDescription)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedByName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UpdatedByName)
+                                    </td>
+                                    <td>
+                                        @*@Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "ui download blue button" })*@
+                                        @Html.ActionLink("Agregar Archivo", "Create","Files", new { id = item.Id }, new { @class = "ui download orange button" })
+                                        @Html.ActionLink("Detalle", "Details", new { id = item.Id }, new { @class = "ui download  button" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

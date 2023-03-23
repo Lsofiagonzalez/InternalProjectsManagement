@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Core.Models.User.Projects>
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Layouts/Dashboard.cshtml";
+}
+
+@{
+    ViewBag._Active = "Home";
+    ViewBag._Panel = "Home";
+}
+
+<br />
+<div class=" segment">
+    <h1 class="ui header" align="center">
+        <div class="content">
+            PROYECTOS ASIGNADOS
+            <div class="sub header">
+                <div class="ui breadcrumb">
+                    <a class="section" href="@Url.Action("Home","Home")">Inicio</a>
+                    <div class="divider"> / </div>
+                    <div class="active section">Lista  de Proyectos</div>
+                </div>
+            </div>
+        </div>
+    </h1>
+    <div class="ui hidden divider"></div>
+    <form action="" method="get" align="right">
+        @*<a href="@Url.Action("create")" class="ui  large blue submit button">
+            Crear Nuevo
+        </a>*@
+
+        @*<div class="ui action input " align="right">
+            <input type="text" name="Name" placeholder="Nombre" value="@ViewBag.FName">
+            <button class="ui icon button" id="btnCon">
+                <i class="search icon"></i>
+            </button>
+        </div>*@
+
+    </form>
+</div>
+
+<br/>
+
+<div class="ui grid" style="width:auto" align="center">
+    <div class="one wide column" ></div>
+    <div class="fourteen wide column">
+        @*<div class="ui segments">
+            <div class="ui blue segment">*@
+                <table id="tabla" class="ui celled small hover striped table" style="width:auto">
+                    <thead>
+                        <tr>
+                            <th>
+                                Nombre de Proyecto
+                            </th>
+                            <th>
+                                Descripcion de Proyecto
+                            </th>
+                            <th>
+                                Creado por:
+                            </th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DisplayName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProjectDescription)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedByName)
+                                </td>
+                             
+                                <td>
+                                   
+                                        @Html.ActionLink("Historial",
+                                        "HistoryProyectUser",  // <-- Controller Name.
+                                        "Home",   // <-- ActionMethod
+                                        new { id = item.Id }, // <-- Route arguments.
+                                        new { @class = "ui  large blue submit button" }  // <-- htmlArguments .. which are none. You need this value
+                                                                                   //     otherwise you call the WRONG method ...
+                                                                                   //     (refer to comments, below).
+                                       )
+                                
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @*</div>
+</div>*@

@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Core.Models.User.Histories>
+
+@{
+    ViewBag.Title = "HistoryProyectUser";
+    Layout = "~/Views/Layouts/Dashboard.cshtml";
+}
+
+@{
+    ViewBag._Active = "HistoryProyectUser";
+    ViewBag._Panel = "Home";
+}
+
+
+
+
+<br />
+<br />
+<div class=" segment">
+    <h1 class="ui header" align="center">
+        <div class="content">
+            <big style="text-transform:uppercase">
+                Módulo  de Lista  de Historiales del Proyecto: @Session["NameProject"]
+            </big>
+            <div class="sub header">
+                <div class="ui breadcrumb">
+                    <a class="section" href="@Url.Action("home","Home")">Inicio</a>
+                    <div class="divider"> / </div>
+                    <div class="active section" style="text-transform:lowercase">Lista  de Historial</div>
+                </div>
+            </div>
+        </div>
+    </h1>
+
+    <div class="ui hidden divider"></div>
+        <form action="" method="get" align="right">
+            <a href="@Url.Action("Create","Histories")" class="ui download blue button">
+                CREAR NUEVO
+            </a>
+        </form>
+</div>
+
+<br />
+<br />
+
+
+<div class="ui grid">
+    <div class="one wide column"></div>
+    <div class="ten wide column">
+        <div class="ui segments">
+            <div class="ui teal segment">
+                <table id="tabla" class="ui celled small hover striped table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Projects.ProjectName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HistoryName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HistoryDescription)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedByName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UpdatedByName)
+                            </th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Projects.ProjectName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HistoryName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HistoryDescription)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedByName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UpdatedByName)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Editar", "Edit", "Histories", new { id = item.Id }, new { @class = "ui download blue button" })
+                                    @Html.ActionLink("Detalle", "Details", "Histories", new { id = item.Id }, new { @class = "ui download  button" })
+                                    @*@Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "ui download black button" })*@
+                                    @Html.ActionLink("Files", "FilesHistory", "Files", new { id = item.Id }, new { @class = "ui download orange button" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
